@@ -31,7 +31,7 @@ int main(int argc, char const *argv[])
     srand(3);
     for (i = 0; i < m; i++) {
         for (j = 0; j < n; j++) {
-            mat[i][j] = rand();
+            mat[i][j] = rand() % 20;
             printf("%d ", mat[i][j]);
         }
         printf("\n");
