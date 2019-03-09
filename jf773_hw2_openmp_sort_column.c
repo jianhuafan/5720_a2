@@ -1,7 +1,13 @@
 #include <stdlib.h>
 #include <stdio.h>
 #include <math.h>
+#include <time.h>
+#include <limits.h>
+#include <sys/times.h>
+#include <sys/types.h>
 #include <omp.h>
+
+#define BILLION 1000000000L
 
 int main(int argc, char const *argv[])
 {
