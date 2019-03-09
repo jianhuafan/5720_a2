@@ -42,7 +42,7 @@ int main(int argc, char const *argv[])
         int max = -1;
         max_row = -1;
         // find max abs element in each column
-        #pragma omp parallel num_threads(n_threads) shared(max, max_row) private(i) 
+        #pragma omp parallel num_threads(n_threads)
         {
             tid = omp_get_thread_num();
             if (tid == 0) {
