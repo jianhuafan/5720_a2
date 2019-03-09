@@ -20,7 +20,7 @@ int main(int argc, char const *argv[])
     int nthreads;
     int tid;
     struct timespec start, end;
-    int diff;
+    long long unsigned int diff;
     
 
     if (argc != 4) {
