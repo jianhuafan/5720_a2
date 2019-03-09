@@ -51,7 +51,7 @@ int main(int argc, char const *argv[])
                 nthreads = omp_get_num_threads(); 
                 printf("Number of threads = %d\n", nthreads);
             }
-            printf("Thread %d starting...\n",tid);
+            printf("Thread %d starting...\n", tid);
 
             #pragma omp for
             for (k = i; k < m; k++) {
@@ -68,7 +68,7 @@ int main(int argc, char const *argv[])
         // print the pair
         k = max_row;
         l = max_col;
-        if (k != -1) {
+        if (k != -1 && l != -1) {
             printf("the pair is: %d %d\n", k, l);
         }
 
