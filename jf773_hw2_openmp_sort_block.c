@@ -95,6 +95,7 @@ int main(int argc, char const *argv[])
                     mat[j][l] = temp;
                 }
             }
+        }
     }
     return 0;
 }
