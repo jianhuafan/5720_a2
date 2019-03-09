@@ -32,7 +32,9 @@ int main(int argc, char const *argv[])
     for (i = 0; i < m; i++) {
         for (j = 0; j < n; j++) {
             mat[i][j] = rand();
+            printf("%d ", mat[i][j]);
         }
+        printf("\n");
     }
 
     // find the max abs element in each column and swap
