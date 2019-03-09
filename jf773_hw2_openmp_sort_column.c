@@ -40,8 +40,8 @@ int main(int argc, char const *argv[])
         int max = -1;
         max_row = -1;
         // find max abs element in each column
-        #pragma omp parallel num_threads(n_threads) shared(max, max_row) private(i) {
-
+        #pragma omp parallel num_threads(n_threads) shared(max, max_row) private(i) 
+        {
             tid = omp_get_thread_num();
             if (tid == 0) {
                 nthreads = omp_get_num_threads(); 
@@ -66,7 +66,8 @@ int main(int argc, char const *argv[])
 
         // swap row i and row k
         if (i != k && k != -1) {
-            #pragma omp parallel shared(i, k) private(j) {
+            #pragma omp parallel shared(i, k) private(j) 
+            {
                 #pragma omp for
                 for (j = 0; j < n; j++) {
                     temp = mat[i][j];
