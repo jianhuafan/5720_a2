@@ -53,8 +53,8 @@ int main(int argc, char const *argv[])
 
             #pragma omp for
             for (k = i; k < m; k++) {
-                if (mat[k][i] > max) {
-                    max = mat[k][i];
+                if (abs(mat[k][i]) > max) {
+                    max = abs(mat[k][i]);
                     max_row = k;
                 }
             }
