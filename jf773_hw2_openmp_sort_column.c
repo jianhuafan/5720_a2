@@ -13,6 +13,8 @@ int main(int argc, char const *argv[])
     int temp;
     int nthreads;
     int tid;
+    struct timespec start, end;
+    uint64_t diff;
     
 
     if (argc != 4) {
@@ -37,6 +39,7 @@ int main(int argc, char const *argv[])
         printf("\n");
     }
 
+    clock_gettime(CLOCK_MONOTONIC, &start);	/* mark start time */
     // find the max abs element in each column and swap
     for (i = 0; i < n; i++) {
         int max = -1;
@@ -79,5 +82,9 @@ int main(int argc, char const *argv[])
             }
         }
     }
+
+    clock_gettime(CLOCK_MONOTONIC, &end);	/* mark the end time */
+    diff = BILLION * (end.tv_sec - start.tv_sec) + end.tv_nsec - start.tv_nsec;
+	printf("elapsed time = %llu milliseconds\n", (long long unsigned int) (diff / 1000000));
     return 0;
 }
