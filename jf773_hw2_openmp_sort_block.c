@@ -21,7 +21,7 @@ int main(int argc, char const *argv[])
     int nthreads;
     int tid;
     struct timespec start, end;
-    uint64_t diff;
+    int diff;
     
 
     if (argc != 4) {
