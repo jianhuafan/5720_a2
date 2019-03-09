@@ -1,14 +1,16 @@
-#include <stdio.h>
 #include <stdlib.h>
+#include <stdio.h>
+#include <math.h>
 #include <omp.h>
 
 int main(int argc, char const *argv[])
 {
     int m, n;
-    int i, j, k;
+    int i, j, k, l;
     int n_threads;
     int** mat;
     int max_row;
+    int max_col;
     int temp;
     int nthreads;
     int tid;
@@ -31,16 +33,19 @@ int main(int argc, char const *argv[])
     for (i = 0; i < m; i++) {
         for (j = 0; j < n; j++) {
             mat[i][j] = rand();
+            printf("%d ", mat[i][j]);
         }
+        printf("\n");
     }
 
-    // find the max abs element in each column and swap
+    // find the max abs element in each block and swap
     for (i = 0; i < n; i++) {
-        int max = 0;
+        int max = -1;
         max_row = -1;
+        max_col = -1;
         // find max abs element in each column
-        #pragma omp parallel num_threads(n_threads) shared(max, max_row) private(i) {
-
+        #pragma omp parallel num_threads(n_threads)
+        {
             tid = omp_get_thread_num();
             if (tid == 0) {
                 nthreads = omp_get_num_threads(); 
@@ -50,22 +55,27 @@ int main(int argc, char const *argv[])
 
             #pragma omp for
             for (k = i; k < m; k++) {
-                if (abs(mat[k][i]) >= max) {
-                    max = abs(mat[k][i]);
-                    max_row = k;
+                for (l = i; l < n; l++) {
+                    if (mat[k][l] > max) {
+                        max = mat[k][l];
+                        max_row = k;
+                        max_col = l;
+                    }
                 }
             }
         }
 
         // print the pair
         k = max_row;
+        l = max_col;
         if (k != -1) {
-            printf("the pair is: %d %d\n", i, k);
+            printf("the pair is: %d %d\n", k, l);
         }
 
-        // swap row i and row k
+        // swap row i and row k, col i and col l
         if (i != k && k != -1) {
-            #pragma omp parallel shared(i, k) private(j) {
+            #pragma omp parallel shared(i, k) private(j) 
+            {
                 #pragma omp for
                 for (j = 0; j < n; j++) {
                     temp = mat[i][j];
@@ -74,6 +84,17 @@ int main(int argc, char const *argv[])
                 }
             }
         }
+
+        if (i != l && l != -1) {
+            #pragma omp parallel shared(i, l) private(j) 
+            {
+                #pragma omp for
+                for (j = 0; j < m; j++) {
+                    temp = mat[j][i];
+                    mat[j][i] = mat[j][l];
+                    mat[j][l] = temp;
+                }
+            }
     }
     return 0;
 }
